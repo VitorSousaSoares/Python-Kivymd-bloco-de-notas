@@ -1,0 +1,304 @@
+<CodTelaInicial>:
+
+    MDFloatLayout:
+
+        MDTopAppBar:
+            title: "HOME"
+            elevation: 2
+            pos_hint: {'center_x': 0.5,'center_y': .95}
+
+        Image:
+            source: "./Telas/T1.png"
+            allow_stretch: True
+            size_hint: 1, 1
+            pos_hint: {'center_x': 0.5,'center_y': .65}
+
+        MDFloatingActionButtonSpeedDial:
+            id: speed_dial
+            data: app.data
+            root_button_anim: True
+
+
+<CodTelaDeNotas>:
+    MDFloatLayout:
+        MDLabel:
+            text: "notas"
+        MDIconButton:
+            icon: "format-list-bulleted"
+            theme_icon_color: "Custom"
+            icon_color: app.theme_cls.primary_color
+            pos_hint: {'center_x': 0.3,'center_y': 0.3}
+            icon_size:"45sp"
+            on_press: app.root.current = "TelaInicial"
+
+
+<CodTelaDeLista>:
+    MDFloatLayout:
+        # id: at
+        MDTopAppBar:
+            title: "LISTAS"
+            pos_hint: {'center_x': 0.5,'center_y': 0.95}
+            elevation: 2
+
+        MDScrollView:
+            pos_hint: {'center_x': .5,'center_y': .5}
+            size_hint: None, None
+            width: 280
+            height: 450
+            MDList:
+                id: container
+
+        MDBottomAppBar:
+            MDTopAppBar:
+                title: "VOLTAR"
+                icon: "plus"
+                type: "bottom"
+                left_action_items: [["arrow-left-bold", lambda x: app.voltar("TelaInicial")]]
+                mode: "end"
+                elevation: .05
+                # on_action_button: app.root.current = "TelaAddLista"
+                on_action_button: app.root.current = "TelaNomeLista"
+
+<CodTelaDeNotasVazia>:
+    MDBoxLayout:
+        orientation: "vertical"
+        MDTopAppBar:
+            title: "Notas"
+            elevation: 2
+
+        MDLabel:
+            text: "Não há itens"
+            halign: "center"
+
+        MDBottomAppBar:
+            MDTopAppBar:
+                title: "VOLTAR"
+                icon: "plus"
+                type: "bottom"
+                left_action_items: [["arrow-left-bold", lambda x: app.voltar("TelaInicial")]]
+                mode: "end"
+                elevation: .05
+                on_action_button: app.root.current = "TelaAddNotas"
+
+<CodTelaAddNotas>:
+    MDFloatLayout:
+
+        MDTopAppBar:
+            id: toolbar
+            title: "ADD NOTAS"
+            left_action_items: [["arrow-left-bold", lambda x: app.callback("TelaDeNotas")]]
+            right_action_items: [["palette", lambda x: root.show_alert_dialog()]]          
+            elevation: 2
+            pos_hint: {'center_x': 0.5,'center_y': 0.95}
+
+        MDTextField:
+            id: TituloNota
+            hint_text: "Titulo da nota"
+            on_text_validate: app.update_text()
+            required: True
+            helper_text_mode: "on_error"
+            helper_text: "*Titulo obrigatorio"
+            pos_hint: {'center_x': 0.5,'center_y': 0.84}
+            size_hint_x: None
+            width: 250
+
+        ScrollView:
+            pos_hint: {'center_x': .5,'center_y': .45}
+            size_hint: None, None
+            width: 250
+            height: 300
+            MDTextField:
+                id: ConteudoDaNota
+                text: ""
+                size_hint_x: .5
+                hint_text: "Nota"
+                max_height: "300dp"
+                multiline: True
+                pos_hint: {"center_x": .5, "center_y": .5}
+                size_hint_x: None
+                width: 250
+
+        MDFlatButton:
+            text: "ADICIONAR"
+            pos_hint: {"center_x": .5, "center_y": .05}
+            on_press: root.adicionarNota()
+            # on_release: app.root.current = "TelaTodasNotas"
+            padding: ('0dp', '25dp', '15dp', '25dp')
+            size_hint: 1, .05
+            font_size: "18sp"
+            md_bg_color: "#2A9D8F"
+
+
+<CodTelaDeInfo>:
+    MDFloatLayout:
+
+        MDTopAppBar:
+            title: "INFORMAÇÕES"
+            pos_hint: {'center_x': 0.5,'center_y': 0.95}
+            elevation: 2
+
+        MDLabel:
+            text: "App de teste"
+            halign:"center"
+
+        MDIconButton:
+            icon: "home-circle"
+            pos_hint: {"center_x": .5, "center_y": .4}
+            on_press: app.root.current = "TelaInicial"
+            icon_size:"55sp"
+<CodTelaTodasNotas>:
+    MDFloatLayout:
+        # id: at
+        MDTopAppBar:
+            title: "NOTAS"
+            pos_hint: {'center_x': 0.5,'center_y': 0.95}
+            elevation: 2
+
+        MDScrollView:
+            pos_hint: {'center_x': .5,'center_y': .5}
+            size_hint: None, None
+            width: 280
+            height: 450
+            MDList:
+                id: container
+
+
+
+        MDBottomAppBar:
+            MDTopAppBar:
+                title: "VOLTAR"
+                icon: "plus"
+                type: "bottom"
+                left_action_items: [["arrow-left-bold", lambda x: app.voltar("TelaInicial")]]
+                mode: "end"
+                elevation: .05
+                on_action_button: app.root.current = "TelaAddNotas"
+<CodTelaEditNotas>:
+    MDFloatLayout:
+        MDTopAppBar:
+            title: "EDITE NOTAS"
+            pos_hint: {'center_x': 0.5,'center_y': 0.95}
+            elevation: 2
+        
+
+        MDLabel:
+            id: labEdi
+            text: ""
+
+        MDIconButton:
+            icon: "home-circle"
+            pos_hint: {"center_x": .5, "center_y": .1}
+            on_press: app.root.current = "TelaInicial"
+            icon_size:"55sp"
+<CodTelaVerNota>:
+    MDFloatLayout:
+        MDTopAppBar:
+            id: NomeNota
+            title: ""
+            pos_hint: {'center_x': 0.5,'center_y': 0.95}
+            elevation: 2
+
+        ScrollView:
+            pos_hint: {'center_x': .5,'center_y': .45}
+            size_hint: None, None
+            width: 250
+            height: 550
+            MDTextField:
+                id: ConteudoDaNota
+                text: ""
+                size_hint_x: .5
+                # hint_text: "Nota"
+                max_height: "480dp"
+                multiline: True
+                pos_hint: {"center_x": .5, "center_y": .5}
+                size_hint_x: None
+                width: 250
+                text_color_normal: "#000000"
+                helper_text: "Editar"
+<CodTelaAddLista>:
+    MDFloatLayout:
+        MDTopAppBar:
+            id: TelaAddListaTop
+            title: "ADD ITENS"
+            left_action_items: [["arrow-left-bold", lambda x: app.callback("TelaDeNotas")]]
+            right_action_items: [["palette", lambda x: root.show_alert_dialog()]]          
+            elevation: 2
+            pos_hint: {'center_x': 0.5,'center_y': 0.95}
+
+        MDTextField:
+            # id: TituloNota
+            hint_text: "Item"
+            on_text_validate: app.update_text()
+            required: True
+            helper_text_mode: "on_error"
+            helper_text: "*Titulo obrigatorio"
+            pos_hint: {'center_x': 0.5,'center_y': 0.84}
+            size_hint_x: None
+            width: 250
+
+        MDFlatButton:
+            text: "ADICIONAR"
+            pos_hint: {"center_x": .5, "center_y": .05}
+            on_press: app.show_alert_dialog()
+            # on_release: app.root.current = "TelaTodasNotas"
+            padding: ('0dp', '25dp', '15dp', '25dp')
+            size_hint: 1, .05
+            font_size: "18sp"
+            md_bg_color: "#2A9D8F"
+
+<CodTelaNomeLista>:
+    MDFloatLayout:
+        MDTopAppBar:
+            id: toolbar
+            title: "Nome da lista"
+            left_action_items: [["arrow-left-bold", lambda x: app.callback("TelaDeLista")]]
+            elevation: 2
+            pos_hint: {'center_x': 0.5,'center_y': 0.95}
+
+        MDTextField:
+            pos_hint: {'center_x': 0.5,'center_y': 0.8}
+            id: NomeLista
+            hint_text: "Nome da lista"
+            on_text_validate: app.update_text()
+            required: True
+            helper_text_mode: "on_error"
+            helper_text: "*Nome obrigatorio"
+            pos_hint: {'center_x': 0.5,'center_y': 0.5}
+            size_hint_x: None
+            width: 250
+
+        MDFlatButton:
+            text: "CRIAR LISTA"
+            pos_hint: {"center_x": .5, "center_y": .05}
+            on_press: root.criar()
+            # on_release: app.root.current = "TelaAddLista"
+            padding: ('0dp', '25dp', '15dp', '25dp')
+            size_hint: 1, .05
+            font_size: "18sp"
+            md_bg_color: "#2A9D8F"
+<CodTelaVerItensLista>:
+    MDFloatLayout:
+        MDTopAppBar:
+            id: NomeLista
+            title: ""
+            pos_hint: {'center_x': 0.5,'center_y': 0.95}
+            elevation: 2
+            val: ""
+
+        MDScrollView:
+            pos_hint: {'center_x': .5,'center_y': .5}
+            size_hint: None, None
+            width: 280
+            height: 450
+            MDList:
+                id: container
+
+        MDBottomAppBar:
+            MDTopAppBar:
+                title: "VOLTAR"
+                icon: "plus"
+                type: "bottom"
+                left_action_items: [["arrow-left-bold", lambda x: app.voltar("TelaDeLista")]]
+                mode: "end"
+                elevation: .05
+                on_action_button: app.root.current = "TelaAddLista"
